@@ -38,22 +38,29 @@ type updateState struct {
 }
 
 func getRepoName() string {
-	if r := os.Getenv("SX0_REPO"); r != "" {
+	if r := envProduct("REPO"); r != "" {
 		return r
 	}
 	return defaultRepo
 }
 
 func stateFilePath() string {
-	// Respect XDG_STATE_HOME or fallback to ~/.local/state/sx0 or ~/.sx0
+	dst := stateFilePathFor(productName)
+	copyFileIfAbsent(dst, stateFilePathFor(legacyName))
+	if os.Getenv("XDG_STATE_HOME") != "" {
+		copyFileIfAbsent(dst, homeDotFile(legacyName, "update_check.json"))
+	}
+	return dst
+}
+
+func stateFilePathFor(product string) string {
 	if xdg := os.Getenv("XDG_STATE_HOME"); xdg != "" {
-		return filepath.Join(xdg, "sx0", "update_check.json")
+		return filepath.Join(xdg, product, "update_check.json")
 	}
-	home, err := os.UserHomeDir()
-	if err != nil {
-		return filepath.Join(os.TempDir(), "sx0_update_check.json")
+	if p := homeDotFile(product, "update_check.json"); p != "" {
+		return p
 	}
-	return filepath.Join(home, ".sx0", "update_check.json")
+	return filepath.Join(os.TempDir(), product+"_update_check.json")
 }
 
 func readUpdateState() (*updateState, error) {
@@ -121,7 +128,7 @@ func compareSemver(v1, v2 string) int {
 
 // fetchLatestRelease queries the GitHub API or release redirect for the latest version.
 func fetchLatestRelease(repo string) (*githubRelease, error) {
-	apiURL := os.Getenv("SX0_UPDATE_URL")
+	apiURL := envProduct("UPDATE_URL")
 	if apiURL == "" {
 		apiURL = fmt.Sprintf("https://api.github.com/repos/%s/releases/latest", repo)
 	}

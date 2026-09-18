@@ -93,6 +93,8 @@ $XDG_CONFIG_HOME/sx0/settings.json     # when XDG_CONFIG_HOME is set
 ~/.sx0/settings.json                   # otherwise
 ```
 
+If the sx0 file is missing, it is copied once from the matching px0 path (`$XDG_CONFIG_HOME/px0/settings.json` or `~/.px0/settings.json`).
+
 ```json
 {
   "agent": "claude"

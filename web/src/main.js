@@ -1,4 +1,5 @@
 // web/src/main.js
+import { migrateBrowserState } from './storage.js';
 import { $, S, api, applyKeyLabels } from './state.js';
 import { measure, layout, render, initRenderer, updateEditorOptionControls } from './renderer.js';
 import { initTabs, openFile, restoreWorkspaceTabs } from './tabs.js';
@@ -23,6 +24,8 @@ import { initSettings } from './settings.js';
 import { initVim } from './vim.js';
 import { initImageViewer } from './imageview.js';
 import { initEdit } from './edit.js';
+
+migrateBrowserState();
 
 // Initialize all subsystems
 initRenderer();

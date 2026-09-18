@@ -23,12 +23,18 @@ func TestIsOptedOut(t *testing.T) {
 	os.Unsetenv("DO_NOT_TRACK")
 
 	for _, val := range []string{"0", "false", "off", "no"} {
-		os.Setenv("SX0_TELEMETRY", val)
+		t.Setenv("SX0_TELEMETRY", val)
+		t.Setenv("PX0_TELEMETRY", "")
 		if !isOptedOut(false) {
 			t.Fatalf("expected isOptedOut to respect SX0_TELEMETRY=%s", val)
 		}
 	}
-	os.Unsetenv("SX0_TELEMETRY")
+	t.Setenv("SX0_TELEMETRY", "")
+	t.Setenv("PX0_TELEMETRY", "0")
+	if !isOptedOut(false) {
+		t.Fatal("expected isOptedOut to respect PX0_TELEMETRY=0")
+	}
+	t.Setenv("PX0_TELEMETRY", "")
 
 	if isOptedOut(false) {
 		t.Fatal("expected isOptedOut to be false when no opt-out is set")
@@ -174,7 +180,8 @@ func TestTelemetrySessionLifecycle(t *testing.T) {
 }
 
 func TestTelemetryDisabledWithoutKey(t *testing.T) {
-	os.Unsetenv("SX0_POSTHOG_KEY")
+	t.Setenv("SX0_POSTHOG_KEY", "")
+	t.Setenv("PX0_POSTHOG_KEY", "")
 	tel := NewTelemetryService(false)
 	if tel.enabled {
 		t.Fatal("expected telemetry disabled without key")

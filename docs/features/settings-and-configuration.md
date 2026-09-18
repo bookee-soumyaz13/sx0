@@ -84,3 +84,5 @@ For automated machine setup, dotfile repositories, or scripting, you can directl
 The file is stored at:
 - `~/.sx0/settings.json`
 - Or `$XDG_CONFIG_HOME/sx0/settings.json` (if `XDG_CONFIG_HOME` is set).
+
+If that file is missing and you previously used px0, sx0 copies `~/.px0/settings.json` (or `$XDG_CONFIG_HOME/px0/settings.json`) into the new path once. `PX0_*` environment variables are still read when the matching `SX0_*` variable is unset. Browser keys under `px0.*` are copied to `sx0.*` on first load.

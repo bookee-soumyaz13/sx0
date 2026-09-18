@@ -46,7 +46,7 @@ type TelemetryService struct {
 // isOptedOut checks common opt-out indicators:
 // - CLI flag --no-telemetry
 // - Environment variable DO_NOT_TRACK=1
-// - Environment variable SX0_TELEMETRY=0 / false / off / no
+// - Environment variable SX0_TELEMETRY=0 / false / off / no (PX0_TELEMETRY still works)
 func isOptedOut(flagNoTelemetry bool) bool {
 	if flagNoTelemetry {
 		return true
@@ -54,7 +54,7 @@ func isOptedOut(flagNoTelemetry bool) bool {
 	if os.Getenv("DO_NOT_TRACK") == "1" {
 		return true
 	}
-	v := strings.ToLower(strings.TrimSpace(os.Getenv("SX0_TELEMETRY")))
+	v := strings.ToLower(envProduct("TELEMETRY"))
 	if v == "0" || v == "false" || v == "off" || v == "no" {
 		return true
 	}
@@ -85,10 +85,10 @@ func filesBucket(n int) string {
 // getOrGenerateDistinctID retrieves or initializes a persistent anonymous UUID.
 // Saved to ~/.sx0/anonymous_id. If writing fails, an ephemeral ID is returned.
 func getOrGenerateDistinctID() string {
-	home, err := os.UserHomeDir()
-	if err == nil && home != "" {
-		idPath := filepath.Join(home, ".sx0", "anonymous_id")
-		if data, err := os.ReadFile(idPath); err == nil {
+	dst := homeDotFile(productName, "anonymous_id")
+	copyFileIfAbsent(dst, homeDotFile(legacyName, "anonymous_id"))
+	if dst != "" {
+		if data, err := os.ReadFile(dst); err == nil {
 			id := strings.TrimSpace(string(data))
 			if len(id) >= 16 {
 				return id
@@ -102,10 +102,9 @@ func getOrGenerateDistinctID() string {
 	}
 	id := hex.EncodeToString(b)
 
-	if home, err := os.UserHomeDir(); err == nil && home != "" {
-		dir := filepath.Join(home, ".sx0")
-		if err := os.MkdirAll(dir, 0755); err == nil {
-			_ = os.WriteFile(filepath.Join(dir, "anonymous_id"), []byte(id), 0644)
+	if dst != "" {
+		if err := os.MkdirAll(filepath.Dir(dst), 0755); err == nil {
+			_ = os.WriteFile(dst, []byte(id), 0644)
 		}
 	}
 
@@ -127,11 +126,11 @@ func generateUUID() string {
 // NewTelemetryService creates and starts a background telemetry worker.
 func NewTelemetryService(flagNoTelemetry bool) *TelemetryService {
 	key := strings.TrimSpace(posthogKey)
-	if envKey := strings.TrimSpace(os.Getenv("SX0_POSTHOG_KEY")); envKey != "" {
+	if envKey := envProduct("POSTHOG_KEY"); envKey != "" {
 		key = envKey
 	}
 
-	host := strings.TrimRight(strings.TrimSpace(os.Getenv("SX0_POSTHOG_HOST")), "/")
+	host := strings.TrimRight(envProduct("POSTHOG_HOST"), "/")
 	if host == "" {
 		host = defaultPostHogHost
 	}
@@ -252,7 +251,7 @@ func (t *TelemetryService) worker() {
 }
 
 func (t *TelemetryService) send(evt telemetryEvent) {
-	debug := os.Getenv("SX0_TELEMETRY_DEBUG") == "1"
+	debug := envProduct("TELEMETRY_DEBUG") == "1"
 
 	payload := map[string]any{
 		"api_key":    t.apiKey,

@@ -75,6 +75,12 @@ var agentPresets = []agentPreset{
 			"gpt-5.4-mini-none",
 			"claude-sonnet-5-low",
 			"claude-opus-4-8-thinking-low",
+			"composer-2.5",
+			"cursor-grok-4.6-medium",
+			"cursor-grok-4.6-high",
+			"cursor-grok-4.6-low",
+			"cursor-grok-4.5-medium",
+			"cursor-grok-4.5-high",
 		},
 	},
 	{

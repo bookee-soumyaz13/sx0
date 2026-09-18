@@ -34,16 +34,22 @@ type settings struct {
 var settingsMu sync.Mutex
 
 // settingsPath mirrors stateFilePath in update.go: honour the XDG location when
-// it is set, otherwise fall back to ~/.sx0.
+// it is set, otherwise fall back to ~/.sx0. A missing sx0 file is copied once
+// from the previous px0 location.
 func settingsPath() string {
+	dst := settingsPathFor(productName)
+	copyFileIfAbsent(dst, settingsPathFor(legacyName))
+	if os.Getenv("XDG_CONFIG_HOME") != "" {
+		copyFileIfAbsent(dst, homeDotFile(legacyName, "settings.json"))
+	}
+	return dst
+}
+
+func settingsPathFor(product string) string {
 	if xdg := os.Getenv("XDG_CONFIG_HOME"); xdg != "" {
-		return filepath.Join(xdg, "sx0", "settings.json")
+		return filepath.Join(xdg, product, "settings.json")
 	}
-	home, err := os.UserHomeDir()
-	if err != nil || home == "" {
-		return ""
-	}
-	return filepath.Join(home, ".sx0", "settings.json")
+	return homeDotFile(product, "settings.json")
 }
 
 type settingSchemaItem struct {

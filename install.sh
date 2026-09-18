@@ -8,10 +8,11 @@
 #   VERSION      - target version to install (e.g. "0.1.0" or "latest", default: "latest")
 #   INSTALL_DIR  - target directory for binary (default: /usr/local/bin or ~/.local/bin)
 #   SX0_REPO     - GitHub repository (default: sx0-ai/sx0)
+#   PX0_REPO     - accepted as an alias of SX0_REPO
 
 set -eu
 
-REPO="${SX0_REPO:-sx0-ai/sx0}"
+REPO="${SX0_REPO:-${PX0_REPO:-sx0-ai/sx0}}"
 VERSION="${VERSION:-latest}"
 
 # Color codes
@@ -131,6 +132,8 @@ is_writable() {
 # Priority 1: Explicit user overrides
 if [ -n "${SX0_INSTALL_DIR:-}" ] && is_writable "$SX0_INSTALL_DIR"; then
   TARGET_DIR="$SX0_INSTALL_DIR"
+elif [ -n "${PX0_INSTALL_DIR:-}" ] && is_writable "$PX0_INSTALL_DIR"; then
+  TARGET_DIR="$PX0_INSTALL_DIR"
 elif [ -n "${INSTALL_DIR:-}" ] && is_writable "$INSTALL_DIR"; then
   TARGET_DIR="$INSTALL_DIR"
 fi

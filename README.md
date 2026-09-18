@@ -120,7 +120,7 @@ If the harness fails, the error appears inline under your instruction together w
 
 ## Settings & Configuration (`settings.json`)
 
-sx0 provides a built-in Settings editor modeled after VS Code. Settings are stored per-user in `~/.sx0/settings.json` (or `$XDG_CONFIG_HOME/sx0/settings.json`), keeping your workspace repository clean.
+sx0 provides a built-in Settings editor modeled after VS Code. Settings are stored per-user in `~/.sx0/settings.json` (or `$XDG_CONFIG_HOME/sx0/settings.json`), keeping your workspace repository clean. A first launch after upgrading from px0 copies `~/.px0/settings.json` if the new file is not there yet.
 
 ### Opening Settings
 - Press **`Cmd+,`** (macOS) or **`Ctrl+,`** (Linux/Windows).
@@ -324,7 +324,7 @@ sx0 collects lightweight, anonymous backend session metrics (via PostHog) strict
 **How to opt out:**
 You can disable telemetry completely at any time through any of the following:
 - CLI flag: `sx0 -no-telemetry`
-- Environment variable: `export DO_NOT_TRACK=1` or `export SX0_TELEMETRY=0`
+- Environment variable: `export DO_NOT_TRACK=1` or `export SX0_TELEMETRY=0` (`PX0_TELEMETRY=0` is still honoured)
 
 
 ## Reproducing Benchmarks
