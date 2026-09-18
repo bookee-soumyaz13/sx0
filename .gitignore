@@ -1,0 +1,24 @@
+dist/
+bench-repos/
+px0
+*.test
+*.prof
+
+# Go
+*.out
+
+# IDE/Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+build/
+
+# Logs
+*.log
+px0
