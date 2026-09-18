@@ -1,6 +1,6 @@
 # Rendered Markdown Preview
 
-px0 features a built-in, rendered Markdown preview engine. When opening any `.md` or `.markdown` file, px0 renders it as a clean, formatted article by default, with an instant toggle (`Alt+M`) to switch between rendered view and raw source code while preserving your exact reading position.
+sx0 features a built-in, rendered Markdown preview engine. When opening any `.md` or `.markdown` file, sx0 renders it as a clean, formatted article by default, with an instant toggle (`Alt+M`) to switch between rendered view and raw source code while preserving your exact reading position.
 
 ---
 
@@ -8,7 +8,7 @@ px0 features a built-in, rendered Markdown preview engine. When opening any `.md
 
 Modern software projects rely heavily on Markdown for documentation, design proposals, architecture specifications, API contracts, and user guides. Reading complex Markdown files in raw text—with unrendered tables, nested link URLs, footnote references, and raw alert tags—creates unnecessary cognitive fatigue.
 
-px0 provides a native Markdown preview engine that renders formatted typography, interactive tables, task lists, and syntax-highlighted code blocks directly in the browser. It keeps preview and source synchronized: toggling between preview and source preserves your scroll location, and clicking code block copy buttons allows you to extract snippet code with a single click.
+sx0 provides a native Markdown preview engine that renders formatted typography, interactive tables, task lists, and syntax-highlighted code blocks directly in the browser. It keeps preview and source synchronized: toggling between preview and source preserves your scroll location, and clicking code block copy buttons allows you to extract snippet code with a single click.
 
 ---
 

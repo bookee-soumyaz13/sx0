@@ -1,6 +1,6 @@
 # Editing with Coding Agents
 
-px0 is intentionally designed as a read-optimized viewer rather than a traditional text editor. When code needs to be modified, px0 allows you to select lines in either the source viewer or the visual diff view and delegate the edit directly to your local CLI coding agent.
+sx0 is intentionally designed as a read-optimized viewer rather than a traditional text editor. When code needs to be modified, sx0 allows you to select lines in either the source viewer or the visual diff view and delegate the edit directly to your local CLI coding agent.
 
 ---
 
@@ -8,13 +8,13 @@ px0 is intentionally designed as a read-optimized viewer rather than a tradition
 
 In modern AI-native development workflows, developers spend less time typing repetitive syntax and more time reviewing, directing, and guiding intelligent agents. Traditional IDEs carry massive authoring baggage—gigabytes of Electron RAM, plugin conflicts, and heavy text manipulation engines.
 
-px0 decouples code viewing from code authoring. It provides a sub-millisecond, low-resource reading experience (~20 MB RSS) while seamlessly integrating with whichever CLI coding agent you already run on your machine (such as Claude Code, Gemini CLI, Cursor Agent, Antigravity, OpenCode, Codex, Aider, or Goose). You select the code, provide an instruction, and px0 coordinates the background execution, streams the progress to your terminal, and automatically refreshes modified files upon completion.
+sx0 decouples code viewing from code authoring. It provides a sub-millisecond, low-resource reading experience (~20 MB RSS) while seamlessly integrating with whichever CLI coding agent you already run on your machine (such as Claude Code, Gemini CLI, Cursor Agent, Antigravity, OpenCode, Codex, Aider, or Goose). You select the code, provide an instruction, and sx0 coordinates the background execution, streams the progress to your terminal, and automatically refreshes modified files upon completion.
 
 ---
 
 ## Supported Harnesses & Models
 
-px0 auto-detects and integrates with all leading terminal coding harnesses:
+sx0 auto-detects and integrates with all leading terminal coding harnesses:
 
 | Harness | Default Model | Execution Template |
 | :--- | :--- | :--- |
@@ -27,7 +27,7 @@ px0 auto-detects and integrates with all leading terminal coding harnesses:
 | **Aider** | `claude-3-7-sonnet` | `aider --yes-always --no-auto-commits --model claude-3-7-sonnet --message {prompt}` |
 | **Goose** | `gpt-4o` | `goose run --no-session --model gpt-4o -t {prompt}` |
 
-By default, px0 selects fast and cost-effective models for each harness, but allows you to select any supported model directly from the harness menu.
+By default, sx0 selects fast and cost-effective models for each harness, but allows you to select any supported model directly from the harness menu.
 
 ---
 
@@ -35,20 +35,20 @@ By default, px0 selects fast and cost-effective models for each harness, but all
 
 1. **Select Code**: Highlight the lines of code you wish to change in either the source code viewer or the visual git diff view.
 2. **Trigger Composer**: Press **`Alt+E`**, right-click to open the context menu, or click **Edit with Agent** in the footer selection bar.
-3. **Configure Harness (First Time)**: Choose your preferred coding harness and model. Your choice is saved globally in `~/.px0/settings.json`, never in your repository files.
+3. **Configure Harness (First Time)**: Choose your preferred coding harness and model. Your choice is saved globally in `~/.sx0/settings.json`, never in your repository files.
 4. **Enter Instruction**: Type what needs to change (e.g., *"Handle nil pointer return in error check"* or *"Refactor to use sync.Once"*) and press `Enter`.
-5. **Real-Time Streaming**: px0 sends the file path, line range, selected code, and prompt to the harness. Progress and agent thought output stream in real time to the terminal stdout where px0 was launched.
-6. **Automatic Document Reload**: When the harness finishes writing to disk, px0 automatically detects the modified files, refreshes the open tabs in place, updates git gutters, and preserves your scroll position. Source views stay source views; diff views stay diff views.
+5. **Real-Time Streaming**: sx0 sends the file path, line range, selected code, and prompt to the harness. Progress and agent thought output stream in real time to the terminal stdout where sx0 was launched.
+6. **Automatic Document Reload**: When the harness finishes writing to disk, sx0 automatically detects the modified files, refreshes the open tabs in place, updates git gutters, and preserves your scroll position. Source views stay source views; diff views stay diff views.
 
 ---
 
 ## Multi-Edit Concurrency & Safety Guards
 
 - **Non-Overlapping Concurrency**: Multiple agent edits can run simultaneously across different files or non-overlapping line ranges within the same file. Each edit runs in its own isolated composer box.
-- **Overlap Prevention**: If you attempt to dispatch an edit that overlaps with lines already being edited by an in-flight agent, px0 blocks the request with a warning. This prevents competing harnesses from producing conflicted or unreviewable code.
+- **Overlap Prevention**: If you attempt to dispatch an edit that overlaps with lines already being edited by an in-flight agent, sx0 blocks the request with a warning. This prevents competing harnesses from producing conflicted or unreviewable code.
 - **Tab Close Guard**: Closing a browser tab while an agent edit is actively running prompts for confirmation, ensuring harnesses are never abandoned mid-execution.
 - **Inline Error Recovery**: If an agent process fails (for example, due to an expired API key or invalid CLI argument), the error message along with process stdout and stderr is rendered inline beneath your instruction. Your instruction remains preserved so you can tweak and retry without retyping.
-- **Network Sandboxing**: Agent execution is only accepted when px0 is accessed via `localhost` or direct IP address. Access through remote hostnames or public tunnel domains rejects agent commands by default to prevent unauthorized execution.
+- **Network Sandboxing**: Agent execution is only accepted when sx0 is accessed via `localhost` or direct IP address. Access through remote hostnames or public tunnel domains rejects agent commands by default to prevent unauthorized execution.
 
 ---
 
@@ -67,13 +67,13 @@ By default, px0 selects fast and cost-effective models for each harness, but all
 
 ## Configuration Options
 
-Agent preferences are managed in Settings (`Cmd/Ctrl+,`) or stored in `~/.px0/settings.json`:
+Agent preferences are managed in Settings (`Cmd/Ctrl+,`) or stored in `~/.sx0/settings.json`:
 
 - **Agent: Harness** (`agent.harness`): The default CLI tool to execute (`claude`, `gemini`, `cursor-agent`, `agy`, `opencode`, `codex`, `aider`, `goose`).
-- **Agent: Timeout Seconds** (`agent.timeoutSeconds`): Maximum execution time before px0 terminates the background process (defaults to `120` seconds, range `10`–`600`).
+- **Agent: Timeout Seconds** (`agent.timeoutSeconds`): Maximum execution time before sx0 terminates the background process (defaults to `120` seconds, range `10`–`600`).
 - **CLI Flags**:
-  - `px0 -agent <name>`: Force a specific agent harness for the current session.
-  - `px0 -no-agent`: Completely disable agent editing capabilities.
+  - `sx0 -agent <name>`: Force a specific agent harness for the current session.
+  - `sx0 -no-agent`: Completely disable agent editing capabilities.
 
 ---
 

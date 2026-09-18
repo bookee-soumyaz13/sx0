@@ -1,6 +1,6 @@
 # Git Awareness & Visual Diff Viewer
 
-px0 includes built-in Git awareness and an interactive visual diff viewer. It highlights working-tree modifications across your file tree and editor gutters, and lets you toggle between source code and an interactive side-by-side or unified diff against `HEAD` with `Cmd/Ctrl+D`.
+sx0 includes built-in Git awareness and an interactive visual diff viewer. It highlights working-tree modifications across your file tree and editor gutters, and lets you toggle between source code and an interactive side-by-side or unified diff against `HEAD` with `Cmd/Ctrl+D`.
 
 ---
 
@@ -8,7 +8,7 @@ px0 includes built-in Git awareness and an interactive visual diff viewer. It hi
 
 In modern software engineering, coding agents, background formatters, and compilers continuously generate or modify files on disk. Developers spend a significant portion of their time verifying what changed, ensuring unintended edits were not introduced, and auditing modifications prior to staging or committing.
 
-px0 provides non-destructive, zero-latency Git awareness. It queries Git status asynchronously in the background without staging files, mutating index locks, or slowing down viewer startup. With visual badges, ancestor dirty propagation, gutter indicators, and full split/unified diffs, you can review changes with complete confidence without leaving the browser.
+sx0 provides non-destructive, zero-latency Git awareness. It queries Git status asynchronously in the background without staging files, mutating index locks, or slowing down viewer startup. With visual badges, ancestor dirty propagation, gutter indicators, and full split/unified diffs, you can review changes with complete confidence without leaving the browser.
 
 ---
 
@@ -46,7 +46,7 @@ When an AI coding agent finishes updating a component or fixing a bug:
 5. If something needs adjustment, select the code directly in the diff view and press `Alt+E` to prompt the agent with a targeted correction.
 
 ### Pre-Commit Review
-Before committing code from your terminal, open px0 to perform a visual walk-through of all pending changes. The uncommitted changes filter isolates your work, ensuring you don't commit debug logs, temporary comments, or unintended formatting tweaks.
+Before committing code from your terminal, open sx0 to perform a visual walk-through of all pending changes. The uncommitted changes filter isolates your work, ensuring you don't commit debug logs, temporary comments, or unintended formatting tweaks.
 
 ---
 
@@ -68,10 +68,10 @@ Git behavior can be customized in Settings (`Cmd/Ctrl+,`):
 - **Git: Gutter Indicators** (`git.gutterIndicators`): Enable or disable real-time change indicator bars in the editor gutter (defaults to `true`).
 - **Diff Editor: Render Side-by-Side** (`diffEditor.renderSideBySide`): Default layout for the diff view (`true` for split, `false` for unified).
 - **Diff Editor: Ignore Trim Whitespace** (`diffEditor.ignoreTrimWhitespace`): Ignore leading and trailing whitespace diffs (defaults to `true`).
-- **CLI Flag `-no-git`**: Launch px0 with Git features completely disabled (`px0 -no-git`) for environments where Git is not installed or when viewing plain directory archives.
+- **CLI Flag `-no-git`**: Launch sx0 with Git features completely disabled (`sx0 -no-git`) for environments where Git is not installed or when viewing plain directory archives.
 
 ---
 
 ## Technical Architecture Deep Dive
 
-For an explanation of how px0 executes read-only `git status --porcelain=v2` and `git diff` commands concurrently with directory indexing, see [Git Awareness & Diffing Internals](../internals/git-integration.md).
+For an explanation of how sx0 executes read-only `git status --porcelain=v2` and `git diff` commands concurrently with directory indexing, see [Git Awareness & Diffing Internals](../internals/git-integration.md).

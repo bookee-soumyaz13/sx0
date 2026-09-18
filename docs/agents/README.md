@@ -1,12 +1,12 @@
 # Operational Guidelines for AI Agents
 
-This document defines critical instructions, architectural principles, and documentation maintenance workflows for AI coding agents working on px0.
+This document defines critical instructions, architectural principles, and documentation maintenance workflows for AI coding agents working on sx0.
 
 ## 1. Core Architectural Tenets
 
 1. Reads stay the hot path: indexing, highlighting, and navigation never wait on a write. The browser may type into an in-memory buffer and POST `/api/save` (same `localPost` IP/localhost gate as agent edits). Agent dispatch remains the way to hand a line range to a coding harness. Do not add a plugin host, Electron, Monaco/CodeMirror, or a second editor runtime.
 1. Zero Runtime and Single Binary Footprint: Any change must compile into a single static binary (`go:embed` for web assets). Do not introduce runtime dependencies (no Node.js/npm runtime requirement, no external database, no CGO dependencies).
-1. Stateless on Disk: px0 leaves zero configuration or temporary cache artifacts on the user filesystem (no local `.px0/` folders or cache files). Edit instructions are held in memory for the life of the process and are never persisted. Writes to a working tree are either a `/api/save` from px0's own page or those made by a dispatched harness.
+1. Stateless on Disk: sx0 leaves zero configuration or temporary cache artifacts on the user filesystem (no local `.sx0/` folders or cache files). Edit instructions are held in memory for the life of the process and are never persisted. Writes to a working tree are either a `/api/save` from sx0's own page or those made by a dispatched harness.
 1. Performance Budgets: Indexing must complete in milliseconds using bounded concurrency (`NumCPU * 4`). File open must remain $O(1)$ relative to file length using windowed chunking (`hlChunk = 1000`) and browser DOM virtualization. Maintain explicit memory reclamation (`debug.FreeOSMemory()` on idle).
 
 ## 2. Mandatory Documentation Maintenance Protocol
@@ -36,8 +36,8 @@ Whenever modifying, adding, or refactoring code in this repository, you must aud
 
 ## 3. Checklist for Agents Prior to Submitting Work
 
-- Verification: Ran `go test ./...` and confirmed all unit/regression tests pass (`ok px0`).
-- Build Integrity: Verified successful build with `go build -o px0 .`.
+- Verification: Ran `go test ./...` and confirmed all unit/regression tests pass (`ok sx0`).
+- Build Integrity: Verified successful build with `go build -o sx0 .`.
 - Web Bundling: If modifying `web/src/`, verified bundle update with `./scripts/build-web.js`.
 - Architecture Sync: Any new optimization, algorithmic adjustment, or structural change is documented in the corresponding [`docs/internals/`](../internals/README.md) write-up.
 - Flag & Shortcut Sync: Any new keyboard shortcut, UI behavior, or CLI flag is reflected in [`README.md`](../../README.md).
@@ -52,7 +52,7 @@ To quickly locate and modify UI features, refer to this structured section index
 | Section / Element ID         | Description                                                                                                                                                                                                                                                                          |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `<nav id="rail">`            | Left activity rail (switch between Explorer, Search, Outline, Theme, Shortcuts).                                                                                                                                                                                                     |
-| `<aside id="side">`          | Collapsible sidebar containing panels: `#panel-files` (tree), `#panel-search`, `#panel-outline`. Its `.panel-head` shows the workspace name (`#root-name`), the changed files filter button (`#btn-changed`), and the re-index button (`#btn-reindex`). Its `.side-foot` holds the px0 logo, the version (`#st-ver`), links to GitHub, and the theme button (`#btn-theme`). |
+| `<aside id="side">`          | Collapsible sidebar containing panels: `#panel-files` (tree), `#panel-search`, `#panel-outline`. Its `.panel-head` shows the workspace name (`#root-name`), the changed files filter button (`#btn-changed`), and the re-index button (`#btn-reindex`). Its `.side-foot` holds the sx0 logo, the version (`#st-ver`), links to GitHub, and the theme button (`#btn-theme`). |
 | `<div id="resizer">`         | Draggable splitter between sidebar and main editor viewport.                                                                                                                                                                                                                         |
 | `<div id="tabs">` & `#crumbs`| Open file tabs bar and current file path breadcrumb navigation.                                                                                                                                                                                                                      |
 | `<div id="editor">`          | Core editor container with `#viewport`, `#sizer`, and virtual rows container `#rows`.                                                                                                                                                                                                |

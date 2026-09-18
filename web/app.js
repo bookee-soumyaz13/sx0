@@ -185,7 +185,7 @@ function layout() {
 function toggleWordWrap(forced) {
   S.wrap = typeof forced === 'boolean' ? forced : !S.wrap;
   document.body.classList.toggle('word-wrap', S.wrap);
-  try { localStorage.setItem('px0.wrap', S.wrap ? 'true' : 'false'); } catch {}
+  try { localStorage.setItem('sx0.wrap', S.wrap ? 'true' : 'false'); } catch {}
   updateEditorOptionControls();
   layout();
   render();
@@ -705,7 +705,7 @@ async function revealDir(dir) {
   const last = treeEl.querySelector('[data-dir="' + CSS.escape(dir) + '"]');
   if (last) last.scrollIntoView({ block: 'center' });
   try {
-    sessionStorage.setItem('px0.openDirs', JSON.stringify(Array.from(openDirs)));
+    sessionStorage.setItem('sx0.openDirs', JSON.stringify(Array.from(openDirs)));
   } catch {}
 }
 
@@ -740,7 +740,7 @@ function initTree() {
         await drawTree(path, kids, path.split('/').length);
       } else openDirs.delete(path);
       try {
-        sessionStorage.setItem('px0.openDirs', JSON.stringify(Array.from(openDirs)));
+        sessionStorage.setItem('sx0.openDirs', JSON.stringify(Array.from(openDirs)));
       } catch {}
       return;
     }
@@ -1657,11 +1657,11 @@ async function start(el, d, onReady) {
 function drawSetup(s, d) {
   const ext = (d.path.match(/\.[^./]+$/) || [d.name])[0];
   if (!s.enabled) {
-    return hintHtml('Language servers are turned off: px0 was started with <b>-no-lsp</b>. ' +
+    return hintHtml('Language servers are turned off: sx0 was started with <b>-no-lsp</b>. ' +
       'Restart it without that flag for call trails, hover and precise references.');
   }
   if (!s.servers.length) {
-    return hintHtml('px0 knows no language server for <b>' + esc(ext) + '</b> files, so call trails are not available here.');
+    return hintHtml('sx0 knows no language server for <b>' + esc(ext) + '</b> files, so call trails are not available here.');
   }
 
   const offer = s.servers.filter(v => v.options.length || v.job);
@@ -1688,7 +1688,7 @@ function drawSetup(s, d) {
     html += '</div>';
   }
   if (!offer.length) {
-    html += '<p>px0 has no installer for this one. Install ' + s.servers.map(v => '<b>' + esc(v.name) + '</b>').join(' or ') +
+    html += '<p>sx0 has no installer for this one. Install ' + s.servers.map(v => '<b>' + esc(v.name) + '</b>').join(' or ') +
       ' and make sure it is on PATH.</p>';
   }
   html += '<div class="lsp-row"><span>Installed one yourself?</span><button class="lsp-btn" data-start>Detect and start</button></div></div>';
@@ -1739,7 +1739,7 @@ const hint = html => { const el = listEl(); if (el) el.innerHTML = '<div class="
 const base = p => p.split('/').pop();
 // Some servers crash on particular call hierarchy requests; say so plainly.
 const explain = msg => /connection lost|exited|EOF/i.test(msg)
-  ? msg + ' (the language server crashed answering this; px0 restarts it on the next request)'
+  ? msg + ' (the language server crashed answering this; sx0 restarts it on the next request)'
   : msg;
 
 function wrap(n, parent) {
@@ -2159,7 +2159,7 @@ function togglePreview() {
 
 function mdSetPref(on) {
   S.mdPreview = on;
-  try { localStorage.setItem('px0.mdPreview', on ? 'true' : 'false'); } catch {}
+  try { localStorage.setItem('sx0.mdPreview', on ? 'true' : 'false'); } catch {}
 }
 
 /* ---------- sanitising ---------- */
@@ -2179,7 +2179,7 @@ const MD_ATTRS = new Set(('align valign alt title lang dir width height colspan 
 const MD_TOKENS = new Set('k kt nf nc nb nv no na nt nd np s m o p c cp gi gd gh ge gs err g'.split(' '));
 const MD_SCHEME = /^([a-z][a-z0-9+.-]*):/i;
 // Relative references resolve against this stand-in origin; landing anywhere else means they were not relative.
-const MD_ORIGIN = 'http://px0.invalid';
+const MD_ORIGIN = 'http://sx0.invalid';
 
 /* The URL parser drops tabs and newlines anywhere and control characters at
    either end, so "java&#9;script:" still has a scheme. Test what it will see. */
@@ -2255,7 +2255,7 @@ function mdSetImage(img, src, base) {
 }
 
 /* Links within the file scroll the preview, links to workspace files open them
-   in px0, web links open a new browser tab, and any other scheme loses its href. */
+   in sx0, web links open a new browser tab, and any other scheme loses its href. */
 function mdSetLink(a, href, base) {
   if (href.startsWith('#')) {
     a.setAttribute('href', href);
@@ -2590,11 +2590,11 @@ let shown = null; // doc the diff view is currently showing, null while hidden
 // picked (split vs unified) is remembered globally as the default for the
 // next file entering diff view.
 function setLayoutPref(mode) {
-  try { localStorage.setItem('px0.diffLayout', mode); } catch {}
+  try { localStorage.setItem('sx0.diffLayout', mode); } catch {}
 }
 
 function layoutPref() {
-  try { return localStorage.getItem('px0.diffLayout') || 'split'; } catch { return 'split'; }
+  try { return localStorage.getItem('sx0.diffLayout') || 'split'; } catch { return 'split'; }
 }
 
 function diffMode(d = doc_()) {
@@ -2937,7 +2937,7 @@ function updateStatus() {
   const verEl = $('#st-ver');
   if (verEl && S.meta?.version) {
     verEl.textContent = 'v' + S.meta.version;
-    verEl.title = `px0 v${S.meta.version} (Click for shortcuts & help)`;
+    verEl.title = `sx0 v${S.meta.version} (Click for shortcuts & help)`;
   }
   drawLspStatus();
 }
@@ -2998,7 +2998,7 @@ function renderMetricsMenu(m) {
   metricsMenuEl.innerHTML = `
     <div class="metrics-title">
       <span>Process Metrics</span>
-      <span class="toast-chip">px0</span>
+      <span class="toast-chip">sx0</span>
     </div>
     <div class="metrics-grid">
       <div class="metrics-row">
@@ -4034,13 +4034,13 @@ function switchTab(i) {
 function saveWorkspaceState() {
   try {
     const tabs = S.tabs.map(t => ({ path: t.path, cur: t.cur }));
-    sessionStorage.setItem('px0.tabs', JSON.stringify({ tabs, active: S.active }));
+    sessionStorage.setItem('sx0.tabs', JSON.stringify({ tabs, active: S.active }));
   } catch {}
 }
 
 async function restoreWorkspaceTabs() {
   try {
-    const saved = sessionStorage.getItem('px0.tabs');
+    const saved = sessionStorage.getItem('sx0.tabs');
     if (!saved) return false;
     const { tabs, active } = JSON.parse(saved);
     if (!Array.isArray(tabs) || tabs.length === 0) return false;
@@ -4097,7 +4097,7 @@ function initTabs() {
 // /static/themes.css, so themes are discovered from the loaded stylesheets and
 // adding one needs no JavaScript change. See docs/internals/styling-and-themes.md.
 
-const KEY = 'px0.theme';
+const KEY = 'sx0.theme';
 const DEFAULT_THEME = 'github-dark';
 const THEME_SELECTOR = /^(?::root|html)?\[data-theme=["']?([\w-]+)["']?\]$/;
 
@@ -4653,7 +4653,7 @@ function setVimModeEnabled(enabled, persist = true) {
 
   if (persist) {
     try {
-      localStorage.setItem('px0.editor.vimMode', vimEnabled ? 'true' : 'false');
+      localStorage.setItem('sx0.editor.vimMode', vimEnabled ? 'true' : 'false');
     } catch {}
     if (S.settings) S.settings['editor.vimMode'] = vimEnabled;
   }
@@ -5451,7 +5451,7 @@ function initVim() {
   // Check initial setting from settings or localStorage fallback
   let initial = false;
   try {
-    const val = localStorage.getItem('px0.editor.vimMode');
+    const val = localStorage.getItem('sx0.editor.vimMode');
     if (val === 'true') initial = true;
   } catch {}
   if (S.settings && S.settings['editor.vimMode'] !== undefined) {
@@ -5753,7 +5753,7 @@ let settingsData = {
   defaults: Object.fromEntries(BUILTIN_SCHEMA.map(s => [s.key, s.default])),
   schema: BUILTIN_SCHEMA,
   raw: '{\n}\n',
-  path: '~/.px0/settings.json'
+  path: '~/.sx0/settings.json'
 };
 let activeSettingsCategory = 'Commonly Used';
 let settingsViewMode = 'ui'; // 'ui' | 'json'
@@ -5860,7 +5860,7 @@ function applySettingLive(key, val) {
     }
     case 'markdown.preview.open': {
       S.mdPreview = val === true || val === 'true';
-      try { localStorage.setItem('px0.mdPreview', S.mdPreview ? 'true' : 'false'); } catch {}
+      try { localStorage.setItem('sx0.mdPreview', S.mdPreview ? 'true' : 'false'); } catch {}
       break;
     }
     case 'editor.vimMode': {
@@ -6351,9 +6351,9 @@ function initSettings() {
 
 
 
-/* px0 does not author edits. Each box composes an instruction and the range it
+/* sx0 does not author edits. Each box composes an instruction and the range it
    is anchored to, hands both to a coding harness on this machine, and reloads
-   whatever moved once that harness exits. Because px0 dispatched the run it
+   whatever moved once that harness exits. Because sx0 dispatched the run it
    knows when the work ended, so nothing here watches the filesystem.
 
    Several edits can run at once, one box per range: two harnesses rewriting
@@ -6818,10 +6818,10 @@ async function showPicker(session) {
 
   const ready = list.filter(h => h.installed);
   if (!ready.length) {
-    showToast('!', 'Could not find any coding harness like Claude Code, OpenCode, Codex, Antigravity, Aider, etc. Install one and restart px0.', 6000);
+    showToast('!', 'Could not find any coding harness like Claude Code, OpenCode, Codex, Antigravity, Aider, etc. Install one and restart sx0.', 6000);
     session.pickEl.innerHTML = '<div class="hint" style="line-height: 1.5; padding: 4px 2px;">' +
       'Could not find any coding harness like <b>Claude Code</b>, <b>OpenCode</b>, <b>Codex</b>, <b>Antigravity</b> (<code>agy</code>), <b>Aider</b>, <b>Goose</b>, <b>Gemini CLI</b>, or <b>Cursor Agent</b>.<br><br>' +
-      'Please install a coding harness, make sure it is on your <code>PATH</code>, and restart px0 after that.</div>';
+      'Please install a coding harness, make sure it is on your <code>PATH</code>, and restart sx0 after that.</div>';
     return;
   }
 
@@ -7199,7 +7199,7 @@ async function finish(session, j) {
   syncBoxVisibility();
   syncAgentTargets();
 
-  /* Without git px0 cannot tell what the harness touched, so an empty list
+  /* Without git sx0 cannot tell what the harness touched, so an empty list
      means "unknown" rather than "nothing" and everything is reloaded. */
   const changed = j.changed || [];
   if (!changed.length && j.tracked !== false) {
@@ -7747,7 +7747,7 @@ initImageViewer();
     initTheme();
 
     // Restore word wrap (default ON)
-    const wrapPref = localStorage.getItem('px0.wrap');
+    const wrapPref = localStorage.getItem('sx0.wrap');
     S.wrap = wrapPref !== null ? wrapPref === 'true' : true;
     document.body.classList.toggle('word-wrap', S.wrap);
 
@@ -7756,7 +7756,7 @@ initImageViewer();
     document.body.classList.remove('hide-lines');
 
     // Restore Markdown preview (default ON)
-    const mdPref = localStorage.getItem('px0.mdPreview');
+    const mdPref = localStorage.getItem('sx0.mdPreview');
     S.mdPreview = mdPref !== null ? mdPref === 'true' : true;
 
     updateEditorOptionControls();
@@ -7769,7 +7769,7 @@ initImageViewer();
   if (S.meta.metrics) updateMetricsDisplay(S.meta.metrics);
   if (S.meta.git) { const b = $('#btn-changed'); if (b) b.hidden = false; }
   applyAgentMeta();
-  document.title = S.meta.name + ' - px0';
+  document.title = S.meta.name + ' - sx0';
   $('#root-name').textContent = S.meta.name;
   $('#root-name').title = S.meta.root;
   if (S.meta.version) {
@@ -7777,7 +7777,7 @@ initImageViewer();
     if (emptyVerEl) emptyVerEl.textContent = 'v' + S.meta.version;
   }
   try {
-    const savedDirs = JSON.parse(sessionStorage.getItem('px0.openDirs') || '[]');
+    const savedDirs = JSON.parse(sessionStorage.getItem('sx0.openDirs') || '[]');
     restoreOpenDirs(savedDirs);
   } catch {}
   await refreshTree();

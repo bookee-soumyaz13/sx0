@@ -1,6 +1,6 @@
 # Vim Keybindings & Modal Navigation
 
-px0 includes an optional Vim modal navigation mode. When enabled, it provides standard modal navigation—Normal mode, Visual mode, and intuitive motions—allowing engineers accustomed to Vim, Neovim, or Helix to navigate documents entirely from the home row.
+sx0 includes an optional Vim modal navigation mode. When enabled, it provides standard modal navigation—Normal mode, Visual mode, and intuitive motions—allowing engineers accustomed to Vim, Neovim, or Helix to navigate documents entirely from the home row.
 
 ---
 
@@ -8,7 +8,7 @@ px0 includes an optional Vim modal navigation mode. When enabled, it provides st
 
 Many developers maintain decades of muscle memory built around modal text editing. Moving your hand away from the keyboard to grab a mouse or repeatedly pressing arrow keys disrupts cognitive momentum.
 
-px0's Vim mode brings the speed and ergonomics of modal motions into the code viewer. Normal mode is for navigation. Insert mode (`i`, `a`, `o`, …) types into the file; `Esc` returns to Normal. Visual mode still feeds px0's context actions — `Alt+C` to copy a reference, `Alt+A` to copy formatted context for an LLM, or `Alt+E` / `c` to dispatch an edit to your coding agent.
+sx0's Vim mode brings the speed and ergonomics of modal motions into the code viewer. Normal mode is for navigation. Insert mode (`i`, `a`, `o`, …) types into the file; `Esc` returns to Normal. Visual mode still feeds sx0's context actions — `Alt+C` to copy a reference, `Alt+A` to copy formatted context for an LLM, or `Alt+E` / `c` to dispatch an edit to your coding agent.
 
 ---
 
@@ -65,7 +65,7 @@ Vim mode can be enabled in Settings:
 2. Locate **Editor: Vim Mode** (`editor.vimMode`).
 3. Click the `[true]` pill button to activate it immediately.
 
-Alternatively, set `"editor.vimMode": true` in `~/.px0/settings.json`.
+Alternatively, set `"editor.vimMode": true` in `~/.sx0/settings.json`.
 
 ---
 

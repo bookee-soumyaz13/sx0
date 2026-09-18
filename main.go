@@ -34,7 +34,7 @@ func main() {
 		dev          = flag.String("dev", "", "serve the UI from this source directory instead of the embedded copy")
 		showVer      = flag.Bool("version", false, "print version and exit")
 		showVerShort = flag.Bool("v", false, "print version and exit (shorthand)")
-		doUpdate     = flag.Bool("update", false, "check for and install latest version of px0")
+		doUpdate     = flag.Bool("update", false, "check for and install latest version of sx0")
 		noColor      = flag.Bool("no-color", false, "disable colour output")
 		quiet        = flag.Bool("quiet", false, "suppress narration")
 		verbose      = flag.Bool("verbose", false, "log requests, searches, symbols, and agent prompts to terminal")
@@ -44,7 +44,7 @@ func main() {
 		noEdit       = flag.Bool("no-edit", false, "do not allow typing and saving from the browser")
 	)
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, "px0 %s - a code navigator\n\nusage: px0 [flags] [file or directory]\n\nflags:\n", version)
+		fmt.Fprintf(os.Stderr, "sx0 %s - a code navigator\n\nusage: sx0 [flags] [file or directory]\n\nflags:\n", version)
 		flag.PrintDefaults()
 	}
 	flag.Parse()
@@ -67,7 +67,7 @@ func main() {
 	}
 
 	if *showVer || *showVerShort || (flag.NArg() == 1 && flag.Arg(0) == "version") {
-		fmt.Printf("px0 %s (%s/%s)\n", version, runtime.GOOS, runtime.GOARCH)
+		fmt.Printf("sx0 %s (%s/%s)\n", version, runtime.GOOS, runtime.GOARCH)
 		return
 	}
 
@@ -116,7 +116,7 @@ func main() {
 	srv := &http.Server{Handler: pxSrv}
 
 	url := viewerURL(addr, initialFile, initialLine)
-	uiHeading("px0 "+version, nil, os.Stdout)
+	uiHeading("sx0 "+version, nil, os.Stdout)
 	uiKV("workspace", root, 11, os.Stdout)
 	uiKV("url", uiAccent(url, os.Stdout), 11, os.Stdout)
 	uiHint("ctrl-c to stop", os.Stdout)
@@ -170,7 +170,7 @@ func main() {
 		<-stop
 		interrupted = true
 		fmt.Print("\r")
-		uiStatus("info", "px0 stopped", "", 0, os.Stderr)
+		uiStatus("info", "sx0 stopped", "", 0, os.Stderr)
 		go func() {
 			<-stop // Second interrupt forces immediate exit
 			os.Exit(130)
@@ -381,6 +381,6 @@ func isWSL() bool {
 }
 
 func fatal(err error) {
-	fmt.Fprintln(os.Stderr, "px0:", err)
+	fmt.Fprintln(os.Stderr, "sx0:", err)
 	os.Exit(1)
 }

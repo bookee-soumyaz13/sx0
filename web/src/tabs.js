@@ -330,13 +330,13 @@ export function switchTab(i) {
 export function saveWorkspaceState() {
   try {
     const tabs = S.tabs.map(t => ({ path: t.path, cur: t.cur }));
-    sessionStorage.setItem('px0.tabs', JSON.stringify({ tabs, active: S.active }));
+    sessionStorage.setItem('sx0.tabs', JSON.stringify({ tabs, active: S.active }));
   } catch {}
 }
 
 export async function restoreWorkspaceTabs() {
   try {
-    const saved = sessionStorage.getItem('px0.tabs');
+    const saved = sessionStorage.getItem('sx0.tabs');
     if (!saved) return false;
     const { tabs, active } = JSON.parse(saved);
     if (!Array.isArray(tabs) || tabs.length === 0) return false;

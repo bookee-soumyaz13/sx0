@@ -100,7 +100,7 @@ export async function revealDir(dir) {
   const last = treeEl.querySelector('[data-dir="' + CSS.escape(dir) + '"]');
   if (last) last.scrollIntoView({ block: 'center' });
   try {
-    sessionStorage.setItem('px0.openDirs', JSON.stringify(Array.from(openDirs)));
+    sessionStorage.setItem('sx0.openDirs', JSON.stringify(Array.from(openDirs)));
   } catch {}
 }
 
@@ -135,7 +135,7 @@ export function initTree() {
         await drawTree(path, kids, path.split('/').length);
       } else openDirs.delete(path);
       try {
-        sessionStorage.setItem('px0.openDirs', JSON.stringify(Array.from(openDirs)));
+        sessionStorage.setItem('sx0.openDirs', JSON.stringify(Array.from(openDirs)));
       } catch {}
       return;
     }

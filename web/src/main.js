@@ -55,7 +55,7 @@ initImageViewer();
     initTheme();
 
     // Restore word wrap (default ON)
-    const wrapPref = localStorage.getItem('px0.wrap');
+    const wrapPref = localStorage.getItem('sx0.wrap');
     S.wrap = wrapPref !== null ? wrapPref === 'true' : true;
     document.body.classList.toggle('word-wrap', S.wrap);
 
@@ -64,7 +64,7 @@ initImageViewer();
     document.body.classList.remove('hide-lines');
 
     // Restore Markdown preview (default ON)
-    const mdPref = localStorage.getItem('px0.mdPreview');
+    const mdPref = localStorage.getItem('sx0.mdPreview');
     S.mdPreview = mdPref !== null ? mdPref === 'true' : true;
 
     updateEditorOptionControls();
@@ -77,7 +77,7 @@ initImageViewer();
   if (S.meta.metrics) updateMetricsDisplay(S.meta.metrics);
   if (S.meta.git) { const b = $('#btn-changed'); if (b) b.hidden = false; }
   applyAgentMeta();
-  document.title = S.meta.name + ' - px0';
+  document.title = S.meta.name + ' - sx0';
   $('#root-name').textContent = S.meta.name;
   $('#root-name').title = S.meta.root;
   if (S.meta.version) {
@@ -85,7 +85,7 @@ initImageViewer();
     if (emptyVerEl) emptyVerEl.textContent = 'v' + S.meta.version;
   }
   try {
-    const savedDirs = JSON.parse(sessionStorage.getItem('px0.openDirs') || '[]');
+    const savedDirs = JSON.parse(sessionStorage.getItem('sx0.openDirs') || '[]');
     restoreOpenDirs(savedDirs);
   } catch {}
   await refreshTree();

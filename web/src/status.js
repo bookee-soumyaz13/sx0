@@ -71,7 +71,7 @@ export function updateStatus() {
   const verEl = $('#st-ver');
   if (verEl && S.meta?.version) {
     verEl.textContent = 'v' + S.meta.version;
-    verEl.title = `px0 v${S.meta.version} (Click for shortcuts & help)`;
+    verEl.title = `sx0 v${S.meta.version} (Click for shortcuts & help)`;
   }
   drawLspStatus();
 }
@@ -132,7 +132,7 @@ function renderMetricsMenu(m) {
   metricsMenuEl.innerHTML = `
     <div class="metrics-title">
       <span>Process Metrics</span>
-      <span class="toast-chip">px0</span>
+      <span class="toast-chip">sx0</span>
     </div>
     <div class="metrics-grid">
       <div class="metrics-row">

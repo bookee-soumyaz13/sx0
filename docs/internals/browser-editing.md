@@ -1,6 +1,6 @@
 # Browser Typing & Save
 
-px0's viewer accepts typing in the browser and writes the file through `POST /api/save`. Agent edits (`Alt+E`) stay available. Huge-file reads are unchanged: the raw buffer is loaded only when you first type, and files over 2 MB / 50,000 lines stay agent-only.
+sx0's viewer accepts typing in the browser and writes the file through `POST /api/save`. Agent edits (`Alt+E`) stay available. Huge-file reads are unchanged: the raw buffer is loaded only when you first type, and files over 2 MB / 50,000 lines stay agent-only.
 
 ## How an edit works
 
@@ -12,7 +12,7 @@ px0's viewer accepts typing in the browser and writes the file through `POST /ap
 
 ## Guards
 
-- Same `localPost` gate as agent edits: POST from px0's own page, Host is an IP or `localhost`. Hostname tunnels cannot save.
+- Same `localPost` gate as agent edits: POST from sx0's own page, Host is an IP or `localhost`. Hostname tunnels cannot save.
 - Workspace `safePath` only. Symlinks, directories, missing files, and paths outside the root are refused.
 - `-no-edit` turns the UI back into a viewer (`/api/meta` reports `"edit": false`).
 - Unsaved tabs confirm before close and `beforeunload`. Re-index skips dirty tabs so a refresh cannot wipe a buffer.

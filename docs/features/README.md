@@ -1,8 +1,8 @@
-# px0 Features Guide
+# sx0 Features Guide
 
-px0 is an ultra-fast, zero-config code reader and navigator specifically optimized for fast reads, remote inspection, and AI-assisted workflows. It provides instant access to codebases of any size with minimal resource consumption (~20 MB RAM, < 1 ms startup).
+sx0 is an ultra-fast, zero-config code reader and navigator specifically optimized for fast reads, remote inspection, and AI-assisted workflows. It provides instant access to codebases of any size with minimal resource consumption (~20 MB RAM, < 1 ms startup).
 
-This directory provides comprehensive documentation for all px0 user-facing features, detailing how each capability works, its role in developer and AI agent pairing workflows, interactive controls, and configuration options.
+This directory provides comprehensive documentation for all sx0 user-facing features, detailing how each capability works, its role in developer and AI agent pairing workflows, interactive controls, and configuration options.
 
 ---
 
@@ -33,7 +33,7 @@ This directory provides comprehensive documentation for all px0 user-facing feat
 
 ## 1. Navigation & Search
 
-Fast code discovery is essential when reviewing large codebases or inspecting agent changes. px0 provides three complementary navigation layers:
+Fast code discovery is essential when reviewing large codebases or inspecting agent changes. sx0 provides three complementary navigation layers:
 
 - **[Fuzzy File Search & Quick Open](fuzzy-file-search.md)**: Jump directly to any file in the workspace using progressive fuzzy filtering (`Cmd/Ctrl+P`). It scores matches by boundary transitions, file extensions, and recent tab activity so target files appear with only 2–3 keystrokes.
 - **[Full Workspace Search](workspace-search.md)**: Search across every file in the repository for text patterns or regular expressions (`Cmd/Ctrl+Shift+F`). Results are grouped by file with context snippets and match counts.
@@ -43,7 +43,7 @@ Fast code discovery is essential when reviewing large codebases or inspecting ag
 
 ## 2. Code Intelligence & Structure
 
-Understanding complex software systems requires more than raw text search. px0 delivers structural and semantic code intelligence while maintaining an ultra-lightweight footprint:
+Understanding complex software systems requires more than raw text search. sx0 delivers structural and semantic code intelligence while maintaining an ultra-lightweight footprint:
 
 - **[Symbol Outline Navigation](symbol-outline.md)**: Open a structured list of symbols (`Cmd/Ctrl+Shift+O`) to view all functions, methods, classes, types, and variables defined within the active document.
 - **[Language Server Protocol (LSP) Integration](lsp-code-intelligence.md)**: Tap into semantic analysis for Go, Rust, TypeScript, Python, C/C++, and other languages. Jump directly to definitions (`F12`), explore all reference call sites (`Shift+F12`), inspect interactive Call Trails (`Alt+Shift+H`), and view documentation cards on hover.
@@ -62,7 +62,7 @@ Modern developers spend substantial time verifying diffs and reviewing code gene
 ## 4. Editing
 
 - **[Browser Editing](browser-editing.md)**: Type in a source tab and save with `Cmd/Ctrl+S`. Files over 2 MB stay agent-only. `-no-edit` restores a viewer-only session.
-- **[Editing with Coding Agents](agent-editing.md)**: Select any code block in a source file or git diff, press `Alt+E` (or right-click), describe the required change, and px0 delegates the task directly to your chosen agent harness.
+- **[Editing with Coding Agents](agent-editing.md)**: Select any code block in a source file or git diff, press `Alt+E` (or right-click), describe the required change, and sx0 delegates the task directly to your chosen agent harness.
 - **[Selection Toolbar & Context Actions](selection-actions.md)**: High-ergonomic footer toolbar providing instant buttons to copy canonical path:line references (`Alt+C`), copy formatted code snippets with surrounding context tailored for LLM chat windows (`Alt+A`), find usages (`Alt+U`), and dispatch inline edits (`Alt+E`).
 
 ---
@@ -78,9 +78,9 @@ Repositories contain documentation, architecture notes, and graphical assets alo
 
 ## 6. Ergonomics & Customization
 
-px0 adapts to developer habits and viewing environments without requiring manual config file tinkering:
+sx0 adapts to developer habits and viewing environments without requiring manual config file tinkering:
 
-- **[Settings & Preferences System](settings-and-configuration.md)**: Comprehensive settings manager accessible via `Cmd/Ctrl+,`. Offers a VS Code-style graphical UI with interactive attribute pills alongside a raw JSON editor (`~/.px0/settings.json`) that updates themes, typography, diff layouts, and search behavior in real time without refreshing the browser.
+- **[Settings & Preferences System](settings-and-configuration.md)**: Comprehensive settings manager accessible via `Cmd/Ctrl+,`. Offers a VS Code-style graphical UI with interactive attribute pills alongside a raw JSON editor (`~/.sx0/settings.json`) that updates themes, typography, diff layouts, and search behavior in real time without refreshing the browser.
 - **[Themes & Styling](themes-and-styling.md)**: 14 built-in dark and light themes crafted for high readability and visual consistency across all panels, diffs, and markdown documents.
 - **[Vim Keybindings & Modal Navigation](vim-mode.md)**: Full modal navigation emulation supporting Normal, Visual, and Motion modes for developers accustomed to Vim, Neovim, or Helix.
 - **[File Explorer & Workspace Management](file-explorer.md)**: Dense, clean file tree with single-child folder compacting, `.gitignore` dimming, and tab lifecycle controls (`Alt+1..9`, `Ctrl+Tab`, `Alt+W`).
@@ -92,4 +92,4 @@ px0 adapts to developer habits and viewing environments without requiring manual
 Engineered from the ground up for instantaneous response times and zero-friction remote usage:
 
 - **[Editor Virtualization & Memory Scavenging](editor-virtualization.md)**: Handles 500,000-line files effortlessly by rendering only ~60 visible rows in the browser DOM. Automatically releases memory back to the operating system after 15 seconds of inactivity.
-- **[Remote Workspaces & Cloud Inspection](remote-workspaces.md)**: Run px0 on remote servers, cloud VMs, Docker containers, or CI runners and view code in your local browser over Tailscale or private networks without SSH keys, port forwarding setups, or remote desktop daemons.
+- **[Remote Workspaces & Cloud Inspection](remote-workspaces.md)**: Run sx0 on remote servers, cloud VMs, Docker containers, or CI runners and view code in your local browser over Tailscale or private networks without SSH keys, port forwarding setups, or remote desktop daemons.

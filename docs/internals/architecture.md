@@ -1,20 +1,20 @@
 # System Architecture & Runtime Lifecycle
 
-This document describes the high-level architecture, startup pipeline, HTTP server, memory scavenging, and security model of `px0`.
+This document describes the high-level architecture, startup pipeline, HTTP server, memory scavenging, and security model of `sx0`.
 
 ## 1. High-Level Design Principles
 
-px0 is engineered as an ultra-fast, zero-overhead code exploration console. Its architecture is guided by five foundational tenets:
+sx0 is engineered as an ultra-fast, zero-overhead code exploration console. Its architecture is guided by five foundational tenets:
 
-1. Reads Stay the Hot Path: indexing, highlighting, and navigation never wait on a write. The browser may type into an in-memory buffer and save through `/api/save` (IP/localhost only, same gate as agent edits). Changes can also be made by a coding harness px0 dispatches on request (see [Harness Editing & Agent Dispatch](agent-editing.md)).
-1. Single Static Binary Footprint: All frontend assets (HTML, CSS, JavaScript, icons, themes) are embedded directly into the Go binary at compile time via `go:embed`. px0 requires no Node.js, Python, or Ruby runtime, no external database, and no CGO dependencies.
+1. Reads Stay the Hot Path: indexing, highlighting, and navigation never wait on a write. The browser may type into an in-memory buffer and save through `/api/save` (IP/localhost only, same gate as agent edits). Changes can also be made by a coding harness sx0 dispatches on request (see [Harness Editing & Agent Dispatch](agent-editing.md)).
+1. Single Static Binary Footprint: All frontend assets (HTML, CSS, JavaScript, icons, themes) are embedded directly into the Go binary at compile time via `go:embed`. sx0 requires no Node.js, Python, or Ruby runtime, no external database, and no CGO dependencies.
 1. Sub-Millisecond Responsiveness: The HTTP listener binds, serves the web UI, and opens the default browser in under 1 millisecond. Heavy operations (full directory indexing, git status checks, language server binary discovery) run asynchronously off the critical path.
-1. Stateless in the Workspace: px0 never writes configuration directories, temporary caches, or metadata files (e.g., `.px0/` or `.cache/`) into a workspace. Indexes and caches live in volatile memory. Outside the workspace it keeps only the remembered harness choice and update/telemetry state under `~/.px0/` (or `$XDG_CONFIG_HOME/px0/`).
+1. Stateless in the Workspace: sx0 never writes configuration directories, temporary caches, or metadata files (e.g., `.sx0/` or `.cache/`) into a workspace. Indexes and caches live in volatile memory. Outside the workspace it keeps only the remembered harness choice and update/telemetry state under `~/.sx0/` (or `$XDG_CONFIG_HOME/sx0/`).
 1. Strict Memory Reclamation: Long-lived background processes should not hold idle RAM. When the user finishes a burst of queries, unused pages are proactively returned to the operating system.
 
 ## 2. Startup Pipeline (<1 ms Critical Path)
 
-When `px0` is executed in a terminal (e.g., `px0 .` or `px0 main.go:42`), the initialization flow executes as follows. A file target detects its enclosing project repository (or working directory) as the workspace and is passed to the browser with its relative path and optional line number.
+When `sx0` is executed in a terminal (e.g., `sx0 .` or `sx0 main.go:42`), the initialization flow executes as follows. A file target detects its enclosing project repository (or working directory) as the workspace and is passed to the browser with its relative path and optional line number.
 
 ```mermaid
 sequenceDiagram
@@ -134,7 +134,7 @@ var gzipPool = sync.Pool{New: func() any {
 
 ## 5. Security Model & Path Sandboxing
 
-Because px0 exposes a local HTTP server that can display source files and interact with local tools, strict boundary constraints are enforced.
+Because sx0 exposes a local HTTP server that can display source files and interact with local tools, strict boundary constraints are enforced.
 
 ### Path Resolution (`safePath` & `resolvePath`)
 
@@ -155,7 +155,7 @@ When navigating code via LSP Go-to-Definition, targets often reside outside the 
 
 ### Origin Verification for Installers
 
-The `/api/lsp/install` and `/api/lsp/start` endpoints execute shell commands (e.g., `go install ...` or `npm install -g ...`), and the `/api/agent/*` mutations run a coding harness. To guard against cross-origin attacks (such as a malicious website triggering command execution via JavaScript fetch while px0 is running in the background):
+The `/api/lsp/install` and `/api/lsp/start` endpoints execute shell commands (e.g., `go install ...` or `npm install -g ...`), and the `/api/agent/*` mutations run a coding harness. To guard against cross-origin attacks (such as a malicious website triggering command execution via JavaScript fetch while sx0 is running in the background):
 
 1. The request method must be `POST`.
 1. The request `Origin` header must match the request `Host` header.
@@ -164,4 +164,4 @@ The `/api/lsp/install` and `/api/lsp/start` endpoints execute shell commands (e.
 
 ### Self-Update Integrity
 
-Before `px0 --update` executes or installs a release binary, it verifies the download against the SHA-256 digest in that release's `checksums.txt` asset. Missing, malformed, or mismatched checksum data aborts the update without replacing the current executable.
+Before `sx0 --update` executes or installs a release binary, it verifies the download against the SHA-256 digest in that release's `checksums.txt` asset. Missing, malformed, or mismatched checksum data aborts the update without replacing the current executable.

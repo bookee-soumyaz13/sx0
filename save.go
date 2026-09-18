@@ -124,7 +124,7 @@ func (s *Server) handleSave(w http.ResponseWriter, r *http.Request) {
 // then renaming over the destination so a crash cannot leave a truncated file.
 func writeFileAtomic(path string, data []byte, perm os.FileMode) error {
 	dir := filepath.Dir(path)
-	f, err := os.CreateTemp(dir, ".px0-save-*")
+	f, err := os.CreateTemp(dir, ".sx0-save-*")
 	if err != nil {
 		return err
 	}

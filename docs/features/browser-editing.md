@@ -1,6 +1,6 @@
 # Browser Editing
 
-Click in a source tab and type. px0 keeps the virtualized viewer — there is no Monaco or textarea overlay — and writes the file when you save.
+Click in a source tab and type. sx0 keeps the virtualized viewer — there is no Monaco or textarea overlay — and writes the file when you save.
 
 ## Shortcuts
 
@@ -14,4 +14,4 @@ Click in a source tab and type. px0 keeps the virtualized viewer — there is no
 
 Agent edits (`Alt+E`) still work on a selection. Diff view and Markdown preview stay read-only; switch to source to type.
 
-Files larger than 2 MB or 50,000 lines cannot be edited here. Use `Alt+E` or `-no-edit` to keep px0 as a viewer (`px0 -no-edit`).
+Files larger than 2 MB or 50,000 lines cannot be edited here. Use `Alt+E` or `-no-edit` to keep sx0 as a viewer (`sx0 -no-edit`).

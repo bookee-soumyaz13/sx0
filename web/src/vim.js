@@ -48,7 +48,7 @@ export function setVimModeEnabled(enabled, persist = true) {
 
   if (persist) {
     try {
-      localStorage.setItem('px0.editor.vimMode', vimEnabled ? 'true' : 'false');
+      localStorage.setItem('sx0.editor.vimMode', vimEnabled ? 'true' : 'false');
     } catch {}
     if (S.settings) S.settings['editor.vimMode'] = vimEnabled;
   }
@@ -847,7 +847,7 @@ export function initVim() {
   // Check initial setting from settings or localStorage fallback
   let initial = false;
   try {
-    const val = localStorage.getItem('px0.editor.vimMode');
+    const val = localStorage.getItem('sx0.editor.vimMode');
     if (val === 'true') initial = true;
   } catch {}
   if (S.settings && S.settings['editor.vimMode'] !== undefined) {

@@ -1,26 +1,26 @@
-# px0
+# sx0
 
-px0 is a fast, ultra-light, remote-first IDE designed for instant code navigation and review in your browser. Booting in under 1 ms and using ~20 MB of RAM, it turns your browser into a zero-latency inspection console with symbol-level navigation, deep search, and syntax highlighting across massive codebases.
+sx0 is a fast, ultra-light, remote-first IDE designed for instant code navigation and review in your browser. Booting in under 1 ms and using ~20 MB of RAM, it turns your browser into a zero-latency inspection console with symbol-level navigation, deep search, and syntax highlighting across massive codebases.
 
 ## Optimized for Reads
 
 More and more code generation happens directly in the terminal—driven by coding agents, CLI tools, and background orchestrators. Developers spend significantly less time typing boilerplate and more time reviewing, auditing, and navigating.
 
-Because speed of access is everything when inspecting code, **px0 is obsessively optimized for reads.** You don't need a heavy editing environment with background extension churn just to verify code; you need a sub-millisecond, zero-latency window into the repository, especially across remote machines. When something needs to change, select it and hand it to the coding agent you already use: px0 runs it and reloads what moved.
+Because speed of access is everything when inspecting code, **sx0 is obsessively optimized for reads.** You don't need a heavy editing environment with background extension churn just to verify code; you need a sub-millisecond, zero-latency window into the repository, especially across remote machines. When something needs to change, select it and hand it to the coding agent you already use: sx0 runs it and reloads what moved.
 
-### Where px0 fits in best:
+### Where sx0 fits in best:
 
 - **Verifying AI Agent Output**: Trace symbol references, inspect live git diffs against `HEAD`, review generated code, send a fix back to the agent from the diff, and close the tab without leaving your terminal flow.
 - **Remote & Cloud Server Inspection**: Spin up on any remote server, VM, or CI runner and browse the codebase instantly from your local browser—no SSH keys, no port forwarding hassle, and no heavy remote desktop/daemons.
 - **Auditing Large Repositories**: Read through massive, 50,000+ file codebases on a laptop without background indexers hogging RAM or spinning up fans.
-- **Sidecar to Terminal Editors**: Keep lightweight editors (like Vim, Neovim, or Helix) in the terminal for typing, while using px0 as a high-density, rich graphical inspection and diff console.
+- **Sidecar to Terminal Editors**: Keep lightweight editors (like Vim, Neovim, or Helix) in the terminal for typing, while using sx0 as a high-density, rich graphical inspection and diff console.
 
 ## Installation
 
 ### Quick Install (macOS, Linux, BSD)
 
 ```bash
-curl -fsSL https://px0.ai/install.sh | sh
+curl -fsSL https://sx0.ai/install.sh | sh
 ```
 
 ### Build from Source
@@ -28,10 +28,10 @@ curl -fsSL https://px0.ai/install.sh | sh
 Requires Go 1.24+. No npm, node, CGO, or external dependencies:
 
 ```bash
-git clone https://github.com/px0-ai/px0.git
-cd px0
+git clone https://github.com/sx0-ai/sx0.git
+cd sx0
 make build
-install -d ~/.local/bin && install px0 ~/.local/bin/
+install -d ~/.local/bin && install sx0 ~/.local/bin/
 ```
 
 To cross-compile binaries for all supported platforms:
@@ -49,19 +49,19 @@ make dist
 - **Rich Syntax Highlighting**: Native tokenization for ~280 languages via Chroma with windowed rendering.
 - **Git Awareness & Visual Diffs**: Status badges (`M`, `A`, `D`, `U`, `R`), dirty folder ancestry propagation, changed-files filter, and side-by-side / unified diffs vs `HEAD` (`Cmd/Ctrl+D`).
 - **Edit in the Browser**: Click in a source tab and type. Save with `Cmd/Ctrl+S`. Agent edits (`Alt+E`) stay available for larger changes. Disable with `-no-edit`.
-- **Edit with Your Coding Agent**: Select code in the source or diff view, right-click (or `Alt+E`), and describe the change. px0 runs Claude Code, OpenCode, OpenAI Codex, Antigravity, Aider, Goose, Gemini CLI, or Cursor Agent on it, reloads what changed, and shows harness errors inline. Several edits can run at once, as long as their line ranges don't overlap.
+- **Edit with Your Coding Agent**: Select code in the source or diff view, right-click (or `Alt+E`), and describe the change. sx0 runs Claude Code, OpenCode, OpenAI Codex, Antigravity, Aider, Goose, Gemini CLI, or Cursor Agent on it, reloads what changed, and shows harness errors inline. Several edits can run at once, as long as their line ranges don't overlap.
 - **Rendered Markdown Preview**: Full GFM preview with Chroma-highlighted code fences; switch between preview and source with `Alt+M` while preserving scroll.
 - **Custom Themes**: 14 built-in themes (GitHub Dark, Tokyo Night, Catppuccin, Dracula, Gruvbox, Nord, Solarized, and more).
 - **Optional Language Server Protocol (LSP)**: Zero-config auto-detection (`gopls`, `rust-analyzer`, `pyright`, `typescript-language-server`, `clangd`) for Go-to-Definition (`F12`), Hover, references, and call trails. Falls back automatically to regex outlines.
-- **Settings & Configuration Modal**: Press `Cmd/Ctrl+,` or click the ⚙️ icon in the status bar to open the VS Code-style Settings editor. Configure editor typography, cursor styles, diff modes, themes, search behavior, file exclusions, and coding agents with live preview and raw JSON synchronization (`~/.px0/settings.json`).
+- **Settings & Configuration Modal**: Press `Cmd/Ctrl+,` or click the ⚙️ icon in the status bar to open the VS Code-style Settings editor. Configure editor typography, cursor styles, diff modes, themes, search behavior, file exclusions, and coding agents with live preview and raw JSON synchronization (`~/.sx0/settings.json`).
 - **Virtual DOM / Zero Overhead**: Opening a 400,000-line file costs the same as a 10-line file; only visible rows are mounted. Reclaims memory after 15 seconds of inactivity.
 - **Completely Self-Contained**: Single static binary embedding all web assets. Zero runtime dependencies, no Electron, no Node, no cloud phone-homes.
 
 ## Language Server (LSP) Setup (Optional)
 
-`px0` works fully out of the box without language servers using built-in fuzzy search and regex outlines.
+`sx0` works fully out of the box without language servers using built-in fuzzy search and regex outlines.
 
-When installed, language servers provide semantic Go-to-Definition (`F12`), hover types/docs, and call trails. px0 auto-detects servers on your `PATH` or standard install directories:
+When installed, language servers provide semantic Go-to-Definition (`F12`), hover types/docs, and call trails. sx0 auto-detects servers on your `PATH` or standard install directories:
 
 | Language | Server | Quick Install |
 | --- | --- | --- |
@@ -77,13 +77,13 @@ When installed, language servers provide semantic Go-to-Definition (`F12`), hove
 | C# | `omnisharp` | Install OmniSharp on `PATH` |
 | LaTeX | `texlab` | `brew install texlab` |
 
-Servers spawn lazily on first request and shut down cleanly upon exit. Disable with `px0 -no-lsp`. You can also click **LSP: set up** in the status bar to view or trigger automatic installation for your OS.
+Servers spawn lazily on first request and shut down cleanly upon exit. Disable with `sx0 -no-lsp`. You can also click **LSP: set up** in the status bar to view or trigger automatic installation for your OS.
 
 ## Editing with a Coding Agent (Optional)
 
-px0 is a fast reader first. You can type in the browser and save (`Cmd/Ctrl+S`), or hand a selection to a coding agent already installed on your machine (`Alt+E`).
+sx0 is a fast reader first. You can type in the browser and save (`Cmd/Ctrl+S`), or hand a selection to a coding agent already installed on your machine (`Alt+E`).
 
-| Harness | Default Model | Command px0 runs |
+| Harness | Default Model | Command sx0 runs |
 | --- | --- | --- |
 | Claude Code | `haiku` | `claude --permission-mode acceptEdits --model haiku -p {prompt}` |
 | Gemini CLI | `gemini-2.5-flash-lite` | `gemini --approval-mode auto_edit -m gemini-2.5-flash-lite -p {prompt}` |
@@ -94,16 +94,16 @@ px0 is a fast reader first. You can type in the browser and save (`Cmd/Ctrl+S`),
 | Aider | `claude-3-7-sonnet` | `aider --yes-always --no-auto-commits --model claude-3-7-sonnet --message {prompt}` |
 | Goose | `gpt-4o` | `goose run --no-session --model gpt-4o -t {prompt}` |
 
-By default, px0 selects the least capable (fastest and most economical) model for each harness, and allows you to choose any available model from the harness menu.
+By default, sx0 selects the least capable (fastest and most economical) model for each harness, and allows you to choose any available model from the harness menu.
 
 ### How an Edit Works
 
 1. Select code in the source view or the git diff view (split or unified, either side).
 1. Pick **Edit with Agent** from the right-click menu, the footer selection bar, or press `Alt+E`.
-1. The first time, choose a harness (and optional model). The choice is remembered in `~/.px0/settings.json` (or `$XDG_CONFIG_HOME/px0/settings.json`), never inside your repository.
-1. Type what should change and press `Enter`. px0 sends the harness the instruction, the file and line range, and the selected lines.
-1. As the agent runs, its progress and actions stream in real time to the terminal stdout where px0 was launched.
-1. When the harness exits, px0 reloads the files it changed. Each tab stays in the view it was in: source stays source, diff stays diff.
+1. The first time, choose a harness (and optional model). The choice is remembered in `~/.sx0/settings.json` (or `$XDG_CONFIG_HOME/sx0/settings.json`), never inside your repository.
+1. Type what should change and press `Enter`. sx0 sends the harness the instruction, the file and line range, and the selected lines.
+1. As the agent runs, its progress and actions stream in real time to the terminal stdout where sx0 was launched.
+1. When the harness exits, sx0 reloads the files it changed. Each tab stays in the view it was in: source stays source, diff stays diff.
 
 The footer always shows the harness and model in use (**Agent: agy (gemini-3.6-flash-low)**). Click it to switch harnesses or choose a different model.
 
@@ -115,12 +115,12 @@ If the harness fails, the error appears inline under your instruction together w
 
 - Several edits can run at once, each in its own box, as long as their line ranges don't overlap. A range that overlaps an edit already in flight is refused: two harnesses rewriting the same lines would produce a result nobody could review.
 - Closing the tab while an edit is still running asks for confirmation first, so a harness is never abandoned mid-write with no way to see how it went.
-- Edits are accepted only from px0's own page, opened by IP address or `localhost`. Through a hostname (reverse proxy, tunnel domain) they are refused. Anyone who can reach px0 by IP can run the harness as you, so keep `-host 0.0.0.0` to private networks.
+- Edits are accepted only from sx0's own page, opened by IP address or `localhost`. Through a hostname (reverse proxy, tunnel domain) they are refused. Anyone who can reach sx0 by IP can run the harness as you, so keep `-host 0.0.0.0` to private networks.
 - Nothing runs until you pick a harness. `-agent` pins one for the session; `-no-agent` turns editing off.
 
 ## Settings & Configuration (`settings.json`)
 
-px0 provides a built-in Settings editor modeled after VS Code. Settings are stored per-user in `~/.px0/settings.json` (or `$XDG_CONFIG_HOME/px0/settings.json`), keeping your workspace repository clean.
+sx0 provides a built-in Settings editor modeled after VS Code. Settings are stored per-user in `~/.sx0/settings.json` (or `$XDG_CONFIG_HOME/sx0/settings.json`), keeping your workspace repository clean.
 
 ### Opening Settings
 - Press **`Cmd+,`** (macOS) or **`Ctrl+,`** (Linux/Windows).
@@ -170,7 +170,7 @@ px0 provides a built-in Settings editor modeled after VS Code. Settings are stor
 
 Traditional IDEs carry tens of thousands of authoring features, Electron runtimes, background indexers, and gigabytes of memory overhead. In modern AI-assisted workflows, developers spend significantly more time reviewing code than typing it.
 
-| Parameter | Traditional IDE (e.g., VS Code) | px0 (Code Viewer) |
+| Parameter | Traditional IDE (e.g., VS Code) | sx0 (Code Viewer) |
 | --- | --- | --- |
 | Primary Purpose | Manual code authoring & plugin host | Instant code reading & navigation |
 | Base Memory (RSS) | ~1,440 MB (1.4+ GB) | ~20 MB (~70x lighter) |
@@ -184,7 +184,7 @@ Traditional IDEs carry tens of thousands of authoring features, Electron runtime
 
 All metrics are measured on real-world repositories and reproducible using [`./benchmark.sh`](benchmark.sh).
 
-### Real Corpus Performance (px0 standalone)
+### Real Corpus Performance (sx0 standalone)
 
 | Repository   | Source Size | Files Indexed | Index Time | Fuzzy Search | Full-Tree Regex Scan | Resident RAM (RSS) |
 | ------------ | ----------- | ------------- | ---------- | ------------ | -------------------- | ------------------ |
@@ -196,30 +196,30 @@ All metrics are measured on real-world repositories and reproducible using [`./b
 | TypeScript   | 414 MB      | 66,533        | 566 ms     | 6.2 ms       | 150.3 ms             | 69 MB              |
 | linux kernel | 1,809 MB    | 95,710        | 370 ms     | 6.0 ms       | 451.8 ms             | 55 MB              |
 
-### Head-to-Head: px0 vs. VS Code
+### Head-to-Head: sx0 vs. VS Code
 
 Run `./benchmark.sh --vscode .` to measure both on your active machine:
 
 ```text
-### px0 vs. VS Code Comparison
+### sx0 vs. VS Code Comparison
 
-| Metric / Parameter | px0                    | VS Code (Server/Remote) | Notes                   |
+| Metric / Parameter | sx0                    | VS Code (Server/Remote) | Notes                   |
 | ------------------ | ---------------------- | ----------------------- | ----------------------- |
 | Memory (RSS)       | 20 MB                  | 1,166 - 1,440 MB        | ~70x lighter            |
 | Instant CPU %      | 0.0%                   | 4.0% - 39.0%            | Minimal CPU churn       |
-| Index Time         | < 1 ms                 | ~4 - 10 s               | px0 is instantaneous    |
+| Index Time         | < 1 ms                 | ~4 - 10 s               | sx0 is instantaneous    |
 | Process Count      | 1 single Go binary     | 15+ processes           | Multi-process Node tree |
 ```
 
 ## Usage
 
-Run `px0` with an optional file or directory:
+Run `sx0` with an optional file or directory:
 
 ```bash
-px0                     # view current workspace
-px0 ~/src/kernel        # view another repository
-px0 web/src/main.js     # view a file in its project workspace
-px0 main.go:42          # open directly to a line number
+sx0                     # view current workspace
+sx0 ~/src/kernel        # view another repository
+sx0 web/src/main.js     # view a file in its project workspace
+sx0 main.go:42          # open directly to a line number
 ```
 
 ### Remote & Cloud Workspaces
@@ -228,26 +228,26 @@ Spin up on any remote server, VM, or container and view code directly in your lo
 
 ```bash
 # Bind all interfaces on a remote machine / cloud instance
-px0 -host 0.0.0.0 -port 7777 ~/work/repo
+sx0 -host 0.0.0.0 -port 7777 ~/work/repo
 
 # Headless / server mode without opening local browser
-px0 -no-open -port 8080 /workspace
+sx0 -no-open -port 8080 /workspace
 
 # In Docker / CI runner
-docker run -p 7777:7777 -v $(pwd):/src px0:latest
+docker run -p 7777:7777 -v $(pwd):/src sx0:latest
 ```
 
-Access securely over Tailscale, WireGuard, reverse proxy, or Cloudflare Tunnel with zero remote setup overhead and sandboxing (path traversal protection & DNS rebinding checks). Anyone who can reach px0 can dispatch agent edits when it is opened by IP address (for example over Tailscale), so bind to a private network. Opened through a hostname, such as a reverse proxy or tunnel domain, editing is refused.
+Access securely over Tailscale, WireGuard, reverse proxy, or Cloudflare Tunnel with zero remote setup overhead and sandboxing (path traversal protection & DNS rebinding checks). Anyone who can reach sx0 can dispatch agent edits when it is opened by IP address (for example over Tailscale), so bind to a private network. Opened through a hostname, such as a reverse proxy or tunnel domain, editing is refused.
 
-### Updating px0
+### Updating sx0
 
-To check for updates and automatically upgrade `px0` to the latest release:
+To check for updates and automatically upgrade `sx0` to the latest release:
 
 ```bash
-px0 --update
+sx0 --update
 ```
 
-`px0` also checks asynchronously in the background once every 24 hours without delaying startup (<1 ms) and notifies you on stderr when an update is available.
+`sx0` also checks asynchronously in the background once every 24 hours without delaying startup (<1 ms) and notifies you on stderr when an update is available.
 
 ### CLI Flags
 
@@ -304,14 +304,14 @@ px0 --update
 
 ## Philosophy and Design Principles
 
-- **Optimized for Reads**: px0 is built as a code reader. You can type in the browser and save, or send a range to the coding agent you choose. It does not become an Electron IDE.
+- **Optimized for Reads**: sx0 is built as a code reader. You can type in the browser and save, or send a range to the coding agent you choose. It does not become an Electron IDE.
 - **Remote-First & SSH-Free**: Works seamlessly whether inspecting a local directory or a cloud instance over Tailscale/VPN—no remote daemons, no X11 forwarding, and no SSH session maintenance.
 - **Private & Sandboxed**: Zero accounts, zero cloud dependencies. Code and queries stay on the running machine. Protected by path traversal guards and DNS rebinding prevention.
 - **Reclaims Memory**: Automatically recovers memory after 15 seconds of inactivity so idle sessions don't hoard host RAM.
 
 ### Telemetry & Privacy
 
-px0 collects lightweight, anonymous backend session metrics (via PostHog) strictly to calculate DAU/MAU and session duration (start time and stop time).
+sx0 collects lightweight, anonymous backend session metrics (via PostHog) strictly to calculate DAU/MAU and session duration (start time and stop time).
 
 **What is NEVER collected:**
 - No feature interactions, user actions, or command activity
@@ -323,8 +323,8 @@ px0 collects lightweight, anonymous backend session metrics (via PostHog) strict
 
 **How to opt out:**
 You can disable telemetry completely at any time through any of the following:
-- CLI flag: `px0 -no-telemetry`
-- Environment variable: `export DO_NOT_TRACK=1` or `export PX0_TELEMETRY=0`
+- CLI flag: `sx0 -no-telemetry`
+- Environment variable: `export DO_NOT_TRACK=1` or `export SX0_TELEMETRY=0`
 
 
 ## Reproducing Benchmarks
@@ -338,7 +338,7 @@ All benchmark figures can be measured directly on your own system:
 # 2. Run the full benchmark suite
 ./benchmark.sh
 
-# 3. Compare px0 directly against VS Code process tree on your workspace
+# 3. Compare sx0 directly against VS Code process tree on your workspace
 ./benchmark.sh --vscode .
 
 # 4. Profile memory lifecycle across index, search, and idle recovery
@@ -352,14 +352,14 @@ See [Performance Benchmarks](BENCHMARKS.md) for full methodology and detailed ch
 
 ## Contributing
 
-Contributions that keep px0 fast, minimal, and dependable are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting issues or pull requests.
+Contributions that keep sx0 fast, minimal, and dependable are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting issues or pull requests.
 
 ### Development Workflow
 
 1. Clone the repository:
   ```bash
-  git clone https://github.com/px0-ai/px0.git
-  cd px0
+  git clone https://github.com/sx0-ai/sx0.git
+  cd sx0
   ```
 1. Run tests:
   ```bash
@@ -387,7 +387,7 @@ For comprehensive technical deep-dives into the architecture, indexing, virtuali
 - `search.go` / `fuzzy.go`: High-performance substring and fuzzy file/symbol matching algorithms.
 - `lsp.go` / `lspnav.go` / `calls.go`: Lightweight JSON-RPC client communicating with local language servers over stdio, plus definitions, references and call trails.
 - `lspservers.go` / `lspsetup.go`: Language server registry, discovery, and install on request.
-- `agent.go` / `settings.go`: Coding harness discovery and dispatch, change detection, user configuration store (`~/.px0/settings.json`), and settings schema validation.
+- `agent.go` / `settings.go`: Coding harness discovery and dispatch, change detection, user configuration store (`~/.sx0/settings.json`), and settings schema validation.
 - `save.go` / `web/src/edit.js`: In-browser typing and `POST /api/save`.
 - `web/`: Native zero-dependency ES module frontend (custom virtual scroll, syntax highlight rendering, tab manager).
 - `web/themes/`: One CSS file per colour theme, joined by the server into `/static/themes.css`. Token reference in [Styling & Themes](docs/internals/styling-and-themes.md).

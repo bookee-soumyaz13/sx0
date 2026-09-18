@@ -1,4 +1,4 @@
-module px0
+module sx0
 
 go 1.25
 
